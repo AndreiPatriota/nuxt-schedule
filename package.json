@@ -1,7 +1,13 @@
 {
   "name": "nuxt-app",
+  "dependencies": {
+    "@picocss/pico": "^2.0.6",
+    "nuxt": "^3.13.0",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7",
+    "vue": "latest"
+  },
   "private": true,
-  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -9,8 +15,5 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
-  "dependencies": {
-    "nuxt": "^3.13.0",
-    "vue": "latest"
-  }
+  "type": "module"
 }
