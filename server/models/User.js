@@ -1,13 +1,12 @@
 import { Sequelize } from 'sequelize';
-import { db } from '../utils/db.instance';
 
 const tableName = 'users';
 const User = db.define(tableName, {
   id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
+    type: Sequelize.STRING,
     allowNull: false,
     primaryKey: true,
+    unique: true,
   },
   name: {
     type: Sequelize.STRING,

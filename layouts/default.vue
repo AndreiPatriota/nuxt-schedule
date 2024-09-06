@@ -13,7 +13,7 @@
       </ul>
     </nav>
 
-    <div>
+    <div class="main-content">
       <slot />
     </div>
   </div>
@@ -21,4 +21,8 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style scoped>
+  .main-content {
+    margin-top: 15px;
+  }
+</style>
