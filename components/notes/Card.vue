@@ -6,7 +6,7 @@
           <strong>{{ props.note.title }}</strong>
         </p>
         <div class="icons-container">
-          <span @click="$emit('note-edit')"
+          <span @click="updateNoteHandler(props.note.id)"
             ><MdiIcon icon="mdiNoteEdit"
           /></span>
           <span @click="deleteNoteHandler(props.note.id)"
@@ -24,8 +24,15 @@
 
 <script setup>
   const props = defineProps(['note']);
-  const deleteNote = inject('delete-note');
 
+  // update note handler
+  const updateNote = inject('update-note');
+  const updateNoteHandler = (id) => {
+    updateNote(id);
+  };
+
+  // delete note handler
+  const deleteNote = inject('delete-note');
   const deleteNoteHandler = async (id) => {
     await deleteNote(id);
   };

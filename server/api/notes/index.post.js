@@ -1,4 +1,3 @@
-import { tryUseNuxt } from 'nuxt/kit';
 import Note from '~/server/models/Note';
 
 export default defineEventHandler(async (event) => {
