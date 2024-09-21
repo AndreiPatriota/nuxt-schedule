@@ -16,8 +16,10 @@
         <option value="purple">Purple</option>
       </select>
 
-      <input type="submit" value="Add Note" />
-      <input type="reset" value="Reset" />
+      <div class="grid">
+        <input type="submit" value="Add Note" />
+        <input type="reset" value="Reset" />
+      </div>
     </form>
 
     <button><NuxtLink to="/notes">Go back</NuxtLink></button>
@@ -31,12 +33,15 @@
     color: '',
   });
 
+  const router = useRouter();
   const submitForm = async () => {
     try {
       const data = await $fetch('/api/notes', {
         method: 'post',
         body: { id: crypto.randomUUID(), ...form },
       });
+
+      await router.push('/notes');
     } catch (error) {
       alert(error);
     }

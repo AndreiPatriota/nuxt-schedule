@@ -3,21 +3,25 @@
     <h1>This is the notes page!</h1>
 
     <NuxtLink to="/notes/add">Add Note</NuxtLink>
-    <NotesList :notes="payload" />
+    <NotesList :notes />
   </div>
 </template>
 
 <script setup>
-  const payload = ref(null);
+  const notes = ref(null);
 
-  try {
-    const { data } = await useFetch('/api/notes', { method: 'get' });
-    payload.value = data.value.notes;
+  onMounted(async () => {
+    const response = await $fetch('/api/notes');
+    notes.value = response.notes;
+  });
 
-    console.log(payload);
-  } catch (error) {
-    alert(error);
-  }
+  const deleteNote = async (noteId) => {
+    await $fetch(`/api/notes/${noteId}`, { method: 'DELETE' });
+
+    notes.value = notes.value.filter((n) => n.id !== noteId);
+  };
+
+  provide('delete-note', deleteNote);
 </script>
 
 <style scoped></style>
