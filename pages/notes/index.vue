@@ -10,24 +10,8 @@
 <script setup>
   const notes = useNotes();
 
-  // init notes
   const { data } = await useFetch('/api/notes');
   notes.value = data.value.notes;
-
-  // update note handler
-  const router = useRouter();
-  const updateNote = (noteId) => {
-    router.push(`/notes/add-update/${noteId}`);
-  };
-  provide('update-note', updateNote);
-
-  // delete note handler
-  const deleteNote = async (noteId) => {
-    await $fetch(`/api/notes/${noteId}`, { method: 'DELETE' });
-
-    notes.value = notes.value.filter((n) => n.id !== noteId);
-  };
-  provide('delete-note', deleteNote);
 </script>
 
 <style scoped></style>

@@ -6,10 +6,10 @@
           <strong>{{ props.note.title }}</strong>
         </p>
         <div class="icons-container">
-          <span @click="updateNoteHandler(props.note.id)"
+          <span @click="updateNote(props.note.id)"
             ><MdiIcon icon="mdiNoteEdit"
           /></span>
-          <span @click="deleteNoteHandler(props.note.id)"
+          <span @click="deleteNote(props.note.id)"
             ><MdiIcon icon="mdiDelete"
           /></span>
         </div>
@@ -24,17 +24,21 @@
 
 <script setup>
   const props = defineProps(['note']);
+  const router = useRouter();
+  const notes = useNotes();
 
   // update note handler
-  const updateNote = inject('update-note');
-  const updateNoteHandler = (id) => {
-    updateNote(id);
+  const updateNote = (noteId) => {
+    router.push(`/notes/add-update/${noteId}`);
   };
 
   // delete note handler
-  const deleteNote = inject('delete-note');
-  const deleteNoteHandler = async (id) => {
-    await deleteNote(id);
+  const deleteNote = async (noteId) => {
+    if (window.confirm('Are you sure you want to dele the note?')) {
+      await $fetch(`/api/notes/${noteId}`, { method: 'DELETE' });
+
+      notes.value = notes.value.filter((n) => n.id !== noteId);
+    }
   };
 </script>
 
