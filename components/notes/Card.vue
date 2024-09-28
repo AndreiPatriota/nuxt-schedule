@@ -6,6 +6,9 @@
           <strong>{{ props.note.title }}</strong>
         </p>
         <div class="icons-container">
+          <span @click="$emit('noteExpansion', props.note.id)"
+            ><MdiIcon icon="mdiArrowExpand"
+          /></span>
           <span @click="updateNote(props.note.id)"
             ><MdiIcon icon="mdiNoteEdit"
           /></span>
@@ -17,7 +20,7 @@
       <div class="flag-container">
         <MdiIcon icon="mdiFlag" :style="`color: ${props.note.color}`" />
       </div>
-      {{ props.note.description }}
+      {{ props.note.description.slice(0, 20) + '...' }}
     </article>
   </div>
 </template>

@@ -1,13 +1,26 @@
 <template>
   <div class="notes-container">
-    <NotesCard v-for="note in props.notes" :key="note.id" :note />
+    <NotesModal v-model="open" :note />
+    <NotesCard
+      v-for="note in props.notes"
+      :key="note.id"
+      :note
+      @note-expansion="openModal" />
   </div>
 </template>
 
 <script setup>
+  const notes = useNotes();
   const props = defineProps({
     notes: Array,
   });
+
+  const open = ref(false);
+  const note = ref();
+  const openModal = (noteId) => {
+    note.value = notes.value.find((n) => n.id === noteId);
+    open.value = true;
+  };
 </script>
 
 <style scoped>
