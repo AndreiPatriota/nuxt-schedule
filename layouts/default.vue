@@ -6,6 +6,7 @@
           <strong><NuxtLink to="/">Drei's Shcedule</NuxtLink></strong>
         </li>
       </ul>
+      <h1>Schedule</h1>
       <ul>
         <li><NuxtLink to="/">Home</NuxtLink></li>
         <li><NuxtLink to="/notes">Notes</NuxtLink></li>

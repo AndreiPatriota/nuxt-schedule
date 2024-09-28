@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>This is the notes page!</h1>
+    <h2>This is the notes page!</h2>
 
-    <NuxtLink to="/notes/add">Add Note</NuxtLink>
+    <NuxtLink to="/notes/add-update">Add Note</NuxtLink>
     <NotesList :notes />
   </div>
 </template>
@@ -17,7 +17,7 @@
   // update note handler
   const router = useRouter();
   const updateNote = (noteId) => {
-    router.push(`/notes/${noteId}`);
+    router.push(`/notes/add-update/${noteId}`);
   };
   provide('update-note', updateNote);
 

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h3 v-if="isUpdate">Update Note</h3>
+    <h3 v-else>Create Note</h3>
     <form @submit.prevent="submitForm">
       <label>Title: <input type="text" v-model="form.title" /></label>
       <label
@@ -17,35 +19,48 @@
       </select>
 
       <div class="grid">
-        <input type="submit" value="Add Note" />
+        <input type="submit" :value="isUpdate ? 'Update' : 'Create'" />
         <input type="reset" value="Reset" />
       </div>
     </form>
 
-    <button><NuxtLink to="/notes">Go back</NuxtLink></button>
+    <NuxtLink to="/notes">Go back</NuxtLink>
   </div>
 </template>
 
 <script setup>
+  const route = useRoute();
+  const router = useRouter();
+  const noteId = route.params.id;
+  const isUpdate = ref(false);
+  const notes = useNotes();
   const form = reactive({
     title: '',
     description: '',
     color: '',
   });
+  
+  let note;
+  if (noteId) {
+    isUpdate.value = true;
 
-  const router = useRouter();
+    note = notes.value.find((n) => n.id === noteId);
+    form.title = note.title;
+    form.description = note.description;
+    form.color = note.color;
+  }
+
   const submitForm = async () => {
-    try {
-      const data = await $fetch('/api/notes', {
-        method: 'post',
-        body: { id: crypto.randomUUID(), ...form },
-      });
+    const method = isUpdate.value ? 'PUT' : 'POST';
+    const path = isUpdate.value ? `/api/notes/${noteId}` : '/api/notes';
+    const body = isUpdate.value
+      ? { id: note.id, ...form }
+      : { id: crypto.randomUUID(), ...form };
 
-      await router.push('/notes');
-    } catch (error) {
-      alert(error);
-    }
+    await $fetch(path, { method, body });
+
+    router.push('/notes');
   };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
